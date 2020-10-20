@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Books: React.FC = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <Grid container className={classes.root}>
