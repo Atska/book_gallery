@@ -1,7 +1,9 @@
-import React from "react";
-import { Theme, makeStyles} from "@material-ui/core/styles";
-import BookCard from "./BookCard"
+import React, { useEffect, useState } from "react";
+import { Theme, makeStyles } from "@material-ui/core/styles";
+import BookCard from "./BookCard";
 import Grid from "@material-ui/core/Grid";
+import axios, { AxiosResponse } from "axios";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -19,12 +21,47 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Books: React.FC = () => {
   const classes = useStyles();
+  const [data, setData] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect((): void => {
+    fetchData();
+  }, []);
+
+  const fetchData = async (): Promise<void> => {
+    try {
+      const result: AxiosResponse<any> = await axios(
+        "http://localhost:3001/books"
+      );
+      console.log(result.data);
+      setData(result.data);
+      setLoading(!loading);
+    } catch (error: any) {
+      console.log(error);
+      throw error;
+    }
+  };
 
   return (
     <Grid container className={classes.root}>
-        <BookCard />
+      {data.map((bookData: any) => {
+        return (
+          <BookCard
+            key={bookData.book_id}
+            author={bookData.author}
+            blurp={bookData.blurp}
+            isbn={bookData.isbn}
+            series={bookData.series}
+            title={bookData.title}
+            link={bookData.link}
+            published={bookData.published}
+            cover_id={bookData.cover_id}
+            book_id={bookData.book_id}
+          />
+        );
+      })}
     </Grid>
   );
-}
+};
 
 export default Books;

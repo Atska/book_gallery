@@ -1,5 +1,5 @@
 const express = require("express");
-const db = require("./utils/db.js");
+const db = require("./src/utils/db.js.js");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
@@ -36,3 +36,13 @@ app.get("/all", (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+let lul = "Darrow is a Helldiver. A pioneer of Mars.
+
+Born to slave beneath the earth so that one day, future generations might live above it.
+
+He is a Red - humankind's lowest caste. But he has something the Golds - the ruthless ruling class - will never understand.
+
+He has a wife he worships, a family who give him strength. He has love.
+
+And when they take that from him, all that remains is revenge . . ."
