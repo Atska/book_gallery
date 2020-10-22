@@ -1,27 +1,44 @@
 import React from "react";
+// Material UI
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import Box from "@material-ui/core/Box";
+// Styles
+import { Theme, makeStyles } from "@material-ui/core/styles";
+import AddBookButton from "./buttons/AddBook";
 
-class NavBar extends React.Component {
-  render() {
-    return (
-      <div>
-        <AppBar position="static" className="AppBar">
-          <Toolbar>
-            <IconButton edge="start" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6">News</Typography>
-            <Button>Login</Button>
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
-  }
-}
+const useStyles = makeStyles((theme: Theme) => ({
+  title: {
+    marginRight: theme.spacing(2),
+  },
+  buttons: {
+    flexGrow: 1,
+  },
+}));
+
+const NavBar: React.FC = () => {
+  const classes = useStyles();
+
+  return (
+    <div>
+      <AppBar position="static" className="AppBar">
+        <Toolbar variant="dense">
+          <Typography variant="h6" className={classes.title}>
+            Book Gallery
+          </Typography>
+          <Box
+            className={classes.buttons}
+            display="flex"
+            alignContent="center"
+            justifyContent="flex-end"
+          >
+            <AddBookButton />
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+};
 
 export default NavBar;

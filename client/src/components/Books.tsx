@@ -3,7 +3,6 @@ import { Theme, makeStyles } from "@material-ui/core/styles";
 import BookCard from "./BookCard";
 import Grid from "@material-ui/core/Grid";
 import axios, { AxiosResponse } from "axios";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -22,25 +21,22 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Books: React.FC = () => {
   const classes = useStyles();
   const [data, setData] = useState<any>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
 
   useEffect((): void => {
+    const fetchData = async (): Promise<void> => {
+      try {
+        const result: AxiosResponse<any> = await axios(
+          "http://localhost:3001/books"
+        );
+        setData(result.data);
+      } catch (error: any) {
+        console.log(error);
+        throw error;
+      }
+    };
     fetchData();
   }, []);
-
-  const fetchData = async (): Promise<void> => {
-    try {
-      const result: AxiosResponse<any> = await axios(
-        "http://localhost:3001/books"
-      );
-      console.log(result.data);
-      setData(result.data);
-      setLoading(!loading);
-    } catch (error: any) {
-      console.log(error);
-      throw error;
-    }
-  };
 
   return (
     <Grid container className={classes.root}>
@@ -55,8 +51,6 @@ const Books: React.FC = () => {
             title={bookData.title}
             link={bookData.link}
             published={bookData.published}
-            cover_id={bookData.cover_id}
-            book_id={bookData.book_id}
           />
         );
       })}
