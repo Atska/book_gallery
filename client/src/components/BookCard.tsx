@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import clsx from "clsx";
+import DeleteBook from "./buttons/DeleteBook";
 // MaterialUI
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
@@ -18,7 +19,6 @@ import Paper from "@material-ui/core/Paper";
 // ICONS
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
-import DeleteIcon from "@material-ui/icons/Delete";
 import UpdateIcon from "@material-ui/icons/Update";
 // Styles
 import { Theme, makeStyles } from "@material-ui/core/styles";
@@ -48,6 +48,7 @@ interface Props {
   link: string;
   published: string;
   series: string;
+  book_id: number;
 }
 
 const BookCard = (props: Props) => {
@@ -58,7 +59,16 @@ const BookCard = (props: Props) => {
     setExpanded(!expanded);
   };
 
-  const { title, author, blurp, isbn, link, published, series } = props;
+  const {
+    title,
+    author,
+    blurp,
+    isbn,
+    link,
+    published,
+    series,
+    book_id,
+  } = props;
 
   return (
     <Card>
@@ -76,9 +86,7 @@ const BookCard = (props: Props) => {
             </Button>
           </Tooltip>
           <Tooltip title="Delete data">
-            <Button>
-              <DeleteIcon />
-            </Button>
+            <DeleteBook book_id={book_id} />
           </Tooltip>
           <Tooltip title="Open for more Infomation">
             <Button

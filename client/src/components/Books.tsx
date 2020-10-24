@@ -51,6 +51,7 @@ const Books: React.FC = () => {
             title={bookData.title}
             link={bookData.link}
             published={bookData.published}
+            book_id={bookData.book_id}
           />
         );
       })}
