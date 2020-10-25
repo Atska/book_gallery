@@ -3,7 +3,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 // Icons
 import DeleteIcon from "@material-ui/icons/Delete";
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
 interface Props {
   book_id: number;
@@ -11,12 +11,10 @@ interface Props {
 
 const DeleteButton = (props: Props) => {
   const { book_id } = props;
-  let url = "http://localhost:3001/deleteBook";
+  let url = `http://localhost:3001/books/${book_id}`;
   const handleClick = async (): Promise<void> => {
     try {
-      const response = await axios.delete(url, {
-        params: { book_id: book_id },
-      });
+      const response = await axios.delete(url);
       console.log(response);
     } catch (error) {
       console.log(error);

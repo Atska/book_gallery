@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import DeleteBook from "./buttons/DeleteBook";
+import UpdateButton from "./buttons/UpdateBook";
 // MaterialUI
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
@@ -19,7 +20,6 @@ import Paper from "@material-ui/core/Paper";
 // ICONS
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
-import UpdateIcon from "@material-ui/icons/Update";
 // Styles
 import { Theme, makeStyles } from "@material-ui/core/styles";
 
@@ -81,9 +81,16 @@ const BookCard = (props: Props) => {
         </Box>
         <Box display="flex" flexDirection="row" alignItems="center">
           <Tooltip title="Update data">
-            <Button>
-              <UpdateIcon />
-            </Button>
+            <UpdateButton
+              title={title}
+              author={author}
+              blurp={blurp}
+              isbn={isbn}
+              link={link}
+              published={published}
+              series={series}
+              book_id={book_id}
+            />
           </Tooltip>
           <Tooltip title="Delete data">
             <DeleteBook book_id={book_id} />

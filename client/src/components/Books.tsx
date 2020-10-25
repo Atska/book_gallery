@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Theme, makeStyles } from "@material-ui/core/styles";
 import BookCard from "./BookCard";
 import Grid from "@material-ui/core/Grid";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -26,9 +26,12 @@ const Books: React.FC = () => {
   useEffect((): void => {
     const fetchData = async (): Promise<void> => {
       try {
-        const result: AxiosResponse<any> = await axios(
-          "http://localhost:3001/books"
-        );
+        const options: AxiosRequestConfig = {
+          method: "get",
+          url: "http://localhost:3001/books",
+        };
+
+        const result: AxiosResponse<any> = await axios(options);
         setData(result.data);
       } catch (error: any) {
         console.log(error);
@@ -36,7 +39,7 @@ const Books: React.FC = () => {
       }
     };
     fetchData();
-  }, []);
+  }, []); //data
 
   return (
     <Grid container className={classes.root}>

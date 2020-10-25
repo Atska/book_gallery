@@ -5,7 +5,7 @@ import { MysqlError, Query } from "mysql";
 class BookController {
   getBooks = (req: Request, res: Response) => {
     try {
-      const query =
+      const query: string =
         "SELECT * FROM book INNER JOIN covers ON book.book_id = covers.book_id;";
       db.query(query, (error: MysqlError, result: Query) => {
         if (error) throw error;
@@ -18,10 +18,10 @@ class BookController {
 
   postBook = (req: Request, res: Response) => {
     try {
-      let book_id;
+      let book_id: number;
       const { title, author, series, date, isbn, link, blurp } = req.body;
 
-      const query =
+      const query: string =
         "INSERT INTO book (title, author, published, isbn, series, blurp) VALUES (?, ?, ?, ?, ?, ?)";
       const queryImg = "INSERT INTO covers (book_id, link) VALUES (?, ?);";
       const queryId = `SELECT book_id FROM book WHERE title LIKE "%${title}%" ORDER BY book_id DESC LIMIT 1`;
@@ -47,9 +47,9 @@ class BookController {
   };
 
   deleteBook = (req: Request, res: Response) => {
-    const { book_id } = req.query;
-    const query = `DELETE FROM book WHERE book_id=${book_id}`;
-    const queryImg = `DELETE FROM covers WHERE book_id=${book_id}`;
+    const { id } = req.params;
+    const query = `DELETE FROM book WHERE book_id=${id}`;
+    const queryImg = `DELETE FROM covers WHERE book_id=${id}`;
 
     try {
       db.query(query, (error: MysqlError, result: any) => {
@@ -62,6 +62,29 @@ class BookController {
     } catch (error) {
       throw error;
     }
+  };
+
+  updateBook = (req: Request, res: Response) => {
+    const { title, author, series, date, isbn, link, blurp } = req.body;
+    const { id } = req.params;
+    const query: string = `UPDATE book 
+     SET 
+     title="${title}", 
+     author="${author}", 
+     series="${series}", 
+     published="${date}",
+     isbn="${isbn}",
+     blurp="${blurp}"
+     WHERE book_id=${id}
+     `;
+    const queryImg = `UPDATE covers SET link="${link}" WHERE book_id=${id}`;
+    db.query(query, (error: MysqlError, result) => {
+      if (error) throw error;
+    });
+
+    db.query(queryImg, (error: MysqlError, result) => {
+      if (error) throw error;
+    });
   };
 }
 

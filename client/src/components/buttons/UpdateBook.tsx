@@ -5,15 +5,25 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
-import Box from "@material-ui/core/Box";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 // Icons
-import BookIcon from "@material-ui/icons/Book";
+import UpdateIcon from "@material-ui/icons/Update";
 
-interface SubmitData {
+interface Props {
+  title: string;
+  author: string;
+  blurp: string;
+  isbn: string;
+  link: string;
+  published: string;
+  series: string;
+  book_id: number;
+}
+
+interface UpdateData {
   title: string;
   author: string;
   series: string;
@@ -23,7 +33,7 @@ interface SubmitData {
   blurp: string;
 }
 
-export default function AddBookButton() {
+const UpdateButton = (props: Props) => {
   const [open, setOpen] = React.useState<boolean>(false);
 
   const handleClickOpen = (): void => {
@@ -34,11 +44,11 @@ export default function AddBookButton() {
     setOpen(false);
   };
 
-  const handlePostData = async (data: SubmitData): Promise<void> => {
+  const handleUpdateClick = async (data: UpdateData) => {
     try {
       const options: AxiosRequestConfig = {
-        method: "post",
-        url: "http://localhost:3001/books",
+        method: "patch",
+        url: `http://localhost:3001/books/${book_id}`,
         data: data,
       };
       const response: AxiosResponse<any> = await axios(options);
@@ -47,13 +57,21 @@ export default function AddBookButton() {
     }
   };
 
+  const {
+    title,
+    author,
+    blurp,
+    isbn,
+    link,
+    published,
+    series,
+    book_id,
+  } = props;
+
   return (
     <div>
-      <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-        <Box display="flex" alignItems="center">
-          Add Book
-          <BookIcon fontSize="small" />
-        </Box>
+      <Button onClick={handleClickOpen}>
+        <UpdateIcon />
       </Button>
       <Dialog
         open={open}
@@ -65,15 +83,15 @@ export default function AddBookButton() {
           <DialogContentText>Every input is required.</DialogContentText>
           <Formik
             initialValues={{
-              title: "",
-              author: "",
-              series: "",
-              date: "",
-              isbn: "",
-              link: "",
-              blurp: "",
+              title: title,
+              author: author,
+              series: series,
+              date: published.slice(0, 10),
+              isbn: isbn,
+              link: link,
+              blurp: blurp,
             }}
-            onSubmit={(data) => handlePostData(data)}
+            onSubmit={(data) => handleUpdateClick(data)}
           >
             {({ values, handleBlur, handleSubmit, handleChange }) => {
               return (
@@ -187,4 +205,6 @@ export default function AddBookButton() {
       </Dialog>
     </div>
   );
-}
+};
+
+export default UpdateButton;

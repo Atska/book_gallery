@@ -23,8 +23,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * ==========
  */
 app.get("/books", BookController.getBooks);
-app.post("/book", BookController.postBook);
-app.delete("/deleteBook", BookController.deleteBook);
+app.post("/books", BookController.postBook);
+app.delete("/books/:id", BookController.deleteBook);
+app.patch("/books/:id", BookController.updateBook);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
