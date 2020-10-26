@@ -21,7 +21,7 @@ const NavBar: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <div>
+    <div data-testid="navbar">
       <AppBar position="static" className="AppBar">
         <Toolbar variant="dense">
           <Typography variant="h6" className={classes.title}>

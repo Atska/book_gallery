@@ -39,26 +39,28 @@ const Books: React.FC = () => {
       }
     };
     fetchData();
-  }, []); //data
+  }, [data]); //data
 
   return (
-    <Grid container className={classes.root}>
-      {data.map((bookData: any) => {
-        return (
-          <BookCard
-            key={bookData.book_id}
-            author={bookData.author}
-            blurp={bookData.blurp}
-            isbn={bookData.isbn}
-            series={bookData.series}
-            title={bookData.title}
-            link={bookData.link}
-            published={bookData.published}
-            book_id={bookData.book_id}
-          />
-        );
-      })}
-    </Grid>
+    <div data-testid="books">
+      <Grid container className={classes.root}>
+        {data.map((bookData: any) => {
+          return (
+            <BookCard
+              key={bookData.book_id}
+              author={bookData.author}
+              blurp={bookData.blurp}
+              isbn={bookData.isbn}
+              series={bookData.series}
+              title={bookData.title}
+              link={bookData.link}
+              published={bookData.published}
+              book_id={bookData.book_id}
+            />
+          );
+        })}
+      </Grid>
+    </div>
   );
 };
 
