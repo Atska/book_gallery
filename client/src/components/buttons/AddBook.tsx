@@ -48,9 +48,9 @@ export default function AddBookButton() {
   };
 
   return (
-    <div>
+    <div data-testid="addBook-btn">
       <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-        <Box display="flex" alignItems="center">
+        <Box data-testid="add-btn" display="flex" alignItems="center">
           Add Book
           <BookIcon fontSize="small" />
         </Box>

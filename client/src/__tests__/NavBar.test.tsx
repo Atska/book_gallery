@@ -1,6 +1,6 @@
 import React from "react";
 import "@testing-library/jest-dom/extend-expect";
-import NavBar from "../NavBar";
+import NavBar from "../components/NavBar";
 import { render } from "@testing-library/react";
 
 describe("<NavBar />", () => {

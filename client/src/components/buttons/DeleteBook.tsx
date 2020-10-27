@@ -21,9 +21,11 @@ const DeleteButton = (props: Props) => {
     }
   };
   return (
-    <Button onClick={handleClick}>
-      <DeleteIcon />
-    </Button>
+    <div data-testid="delete-btn">
+      <Button onClick={handleClick}>
+        <DeleteIcon />
+      </Button>
+    </div>
   );
 };
 

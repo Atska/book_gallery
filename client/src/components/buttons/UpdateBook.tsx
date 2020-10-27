@@ -69,7 +69,7 @@ const UpdateButton = (props: Props) => {
   } = props;
 
   return (
-    <div>
+    <div data-testid="upload-btn">
       <Button onClick={handleClickOpen}>
         <UpdateIcon />
       </Button>

@@ -8,7 +8,6 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
-import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import Collapse from "@material-ui/core/Collapse";
 import Table from "@material-ui/core/Table";
@@ -40,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface Props {
+export interface Props {
   title: string;
   author: string;
   blurp: string;
@@ -71,16 +70,16 @@ const BookCard = (props: Props) => {
   } = props;
 
   return (
-    <Card>
-      <CardMedia className={classes.media} src={link} image={link} />
-      <CardContent>
-        <Box display="flex" flexDirection="column" alignItems="center">
-          <Typography variant="h6">{title}</Typography>
-          <Typography variant="subtitle1">{series}</Typography>
-          <Typography variant="subtitle2">By {author}</Typography>
-        </Box>
-        <Box display="flex" flexDirection="row" alignItems="center">
-          <Tooltip title="Update data">
+    <div data-testid="book-card">
+      <Card>
+        <CardMedia className={classes.media} src={link} image={link} />
+        <CardContent>
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography variant="h6">{title}</Typography>
+            <Typography variant="subtitle1">{series}</Typography>
+            <Typography variant="subtitle2">By {author}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" alignItems="center">
             <UpdateButton
               title={title}
               author={author}
@@ -91,11 +90,9 @@ const BookCard = (props: Props) => {
               series={series}
               book_id={book_id}
             />
-          </Tooltip>
-          <Tooltip title="Delete data">
+
             <DeleteBook book_id={book_id} />
-          </Tooltip>
-          <Tooltip title="Open for more Infomation">
+
             <Button
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,
@@ -105,40 +102,38 @@ const BookCard = (props: Props) => {
             >
               <ArrowDropDownIcon />
             </Button>
-          </Tooltip>
-        </Box>
-      </CardContent>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <TableContainer component={Paper}>
-          <Table size="small" aria-label="a dense table">
-            <TableBody>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  Published:
-                </TableCell>
-                <TableCell align="right">{published.slice(0, 10)}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  ISBN:
-                </TableCell>
-                <TableCell align="right">{isbn}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Typography display="inline" paragraph>
-          {blurp}
-        </Typography>
-        <Box display="flex" justifyContent="center">
-          <Tooltip title="Open for more Infomation">
+          </Box>
+        </CardContent>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <TableContainer component={Paper}>
+            <Table size="small" aria-label="a dense table">
+              <TableBody>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    Published:
+                  </TableCell>
+                  <TableCell align="right">{published.slice(0, 10)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    ISBN:
+                  </TableCell>
+                  <TableCell align="right">{isbn}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Typography display="inline" paragraph>
+            {blurp}
+          </Typography>
+          <Box display="flex" justifyContent="center">
             <Button onClick={() => handleExpandClick()} aria-label="show more">
               <ArrowDropUpIcon />
             </Button>
-          </Tooltip>
-        </Box>
-      </Collapse>
-    </Card>
+          </Box>
+        </Collapse>
+      </Card>
+    </div>
   );
 };
 
